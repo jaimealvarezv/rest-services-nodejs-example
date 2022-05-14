@@ -1,5 +1,10 @@
 
 const { request, response } = require ('express');
+const bcryptjs = require('bcryptjs');
+
+const User = require('../models/user');
+const bcrypt = require('bcryptjs/dist/bcrypt');
+
 
 const usersGet = (req = request, res = response) => {
     
@@ -13,14 +18,25 @@ const usersGet = (req = request, res = response) => {
     });
 }
 
-const usersPost = (req, res = response) => {
+const usersPost = async (req, res = response) => {
+   
+    //const {name, lastName}  = req.body;
+    const {name, email, password, role} = req.body;
+    const user=new User({name, email, password, role});
     
-    const {name, lastName}  = req.body;
-   // console.log(req);
+    // make the password hash
+    const salt = bcryptjs.genSaltSync();
+    user.password=bcryptjs.hashSync(password, salt);
+
+    try {
+        await user.save();
+    } catch (error) {
+        console.log(error)
+        throw new Error ("Error on save new user");
+    }
+
     res.json({
-        msg: 'Method: POST,  route: /api/users  controller',
-        name,
-        lastName
+        user
     });
 }
 
