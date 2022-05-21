@@ -12,6 +12,7 @@ class Server {
         this.port = process.env.PORT;
         this.usersPath = '/api/users';
         this.logsPath = '/api/logs';
+        this.webhookPath = '/webhook';
 
         // Database connection
         this.connectDB();
@@ -38,6 +39,7 @@ class Server {
     routes() {
        this.app.use( this.usersPath, require('../routes/users'));
        this.app.use( this.logsPath, require('../routes/logs'));
+       this.app.use( this.webhookPath, require('../routes/webhooks'));
     }
 
     listen () {
