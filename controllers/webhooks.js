@@ -13,7 +13,7 @@ const webhookGet = (req, res = response) => {
 const webhookPost =  (req, res = response) => {
 
     console.log("Incoming webhook: " + JSON.stringify(req.body));
-    res.sendStatus(200).json({
+    res.json({
         msg: 'Method: POST,  route: /webhook controller'
      });
 
