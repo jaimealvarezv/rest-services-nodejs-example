@@ -1,20 +1,26 @@
 
 const { request, response } = require ('express');
-
+const Log = require('../models/log');
     
-const webhookGet = (req, res = response) => {
-    const msg= "Simple WhatsApp Webhook tester</br>There is no front-end, see server.js for implementation!";
-
+const webhookGet =  (req, res = response) => {
+    const msg1= "Simple WhatsApp Webhook tester</br>There is no front-end, see server.js for implementation!";
+   
     res.json({
-       msg: 'Method: GET,  route: /webhook controller'
+       msg: 'Method: GET - route: /webhook controller'
     });
 }
 
-const webhookPost =  (req, res = response) => {
+const webhookPost =  async (req, res = response) => {
 
     console.log("Incoming webhook: " + JSON.stringify(req.body));
+    const {msg} = req.body;
+
+    const log=new Log({msg});
+    await log.save();
+    console.log(msg);
+
     res.json({
-        msg: 'Method: POST,  route: /webhook controller'
+        msg
      });
 
 }
