@@ -12,7 +12,7 @@ class Server {
         this.port = process.env.PORT;
         this.usersPath = '/api/users';
         this.logsPath = '/api/logs';
-        this.webhookPath = '/webhook';
+        this.webhookPath = '/api/webhook';
 
         // Database connection
         this.connectDB();
